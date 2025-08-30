@@ -1,6 +1,7 @@
-<?php 
-session_start();
+<?php
 include "conexion.php";
+check_sesion_admin();
+mostrarErrores();
 $conexion = conectar();
 $errorMsg = "";
 
@@ -8,7 +9,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $usuario = trim($_POST["usuario"]);
     $clave = trim($_POST["clave"]);
 
-    $peticion = $conexion->prepare("SELECT * FROM usuarios WHERE nombre = ?");
+    $peticion = $conexion->prepare("SELECT * FROM usuarios WHERE correo = ?");
     $peticion->bind_param("s", $usuario);
     $peticion->execute();
 
@@ -18,9 +19,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $usuarioEncontrado = $resultado->fetch_assoc();
     
         if(password_verify($clave, $usuarioEncontrado['clave'])){
-            $_SESSION['usuario'] = $usuarioEncontrado['nombre'];
-            header("Location: prueba.php");
-            exit();
+            $_SESSION['id_usuario'] = $usuarioEncontrado['id'];
+            header("Location: index.php");
+           
         } else {
             $errorMsg = "Contraseña equivocada";
         }
@@ -52,8 +53,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <h1 style="color: #FF6600; font-size: 48px;" >Login</h1>
                 </div>
                 <div class="login_form d-flex" style="margin: 65px 0;" >
-                    <img src="recursos/usuario.png" class="me-3" alt="usuario" style="width: 28px; height: 28px;">
-                    <input type="text" name="usuario" id="usuario" class="input_login" placeholder="Ingrese su usuario"  style="width: 100%; font-size: 24px; color: white; background: none; border: none;">
+                    <img src="recursos/usuario.png" class="me-3" alt="correo" style="width: 28px; height: 28px;">
+                    <input type="text" name="usuario" id="usuario" class="input_login" placeholder="Ingrese su correo"  style="width: 100%; font-size: 24px; color: white; background: none; border: none;">
                 </div>
                 <div class="login_form d-flex mb-5">
                     <img src="recursos/candado.png" alt="usuario" class="me-3" style="width: 28px; height: 28px;">

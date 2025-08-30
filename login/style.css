@@ -13,9 +13,9 @@ body {
 }
 #register_box {
     background-color: #383434 !important; 
-    padding: 100px !important;
-    width: 530px !important;
-    height: 629px !important;
+    padding: 10% !important;
+    /*width: 530px !important; */
+   /* height: 629px !important; */
     border-radius: 16px !important;
 }
 .login_caja_principal{

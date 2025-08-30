@@ -3,7 +3,8 @@
 DEFINE("SERVER", "localhost");
 DEFINE("USUARIO", "root");
 DEFINE("PASS", "");
-DEFINE("BASE", "usuarios_db");
+DEFINE("BASE", "taller_gerardo");
+//DEFINE("URL_FRONT","http://localhost/");
 
 // ESTA FUNCION ES LA USARAS MULTIPLES VECES PARA CONECTARTE DE MANERA SEGURA A LA DB - PRIMERO EMPIEZA CON MYSQLi LUEGO PASA A PDO
 
@@ -21,6 +22,23 @@ function conectar(){
 	return $con;
 	$con->close();
 }
+function mostrarErrores() {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+}
 
+function check_session(){
+	session_start();
+		if(!isset($_SESSION['id_usuario'])){
+		header("Location: login.php"); 
+	  }
+}
+function check_sesion_admin(){
+	session_start();
+	if(isset($_SESSION['id_usuario'])){
+			header("Location: index.php");
+	}
+}
 
 ?>

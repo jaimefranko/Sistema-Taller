@@ -1,6 +1,7 @@
 <?php 
     include "conexion.php";
-
+    //mostrarErrores();
+    check_sesion_admin();
     $conexion = conectar();
     $errorMsg = "";
 
@@ -11,19 +12,23 @@
         if(empty($usuario) || empty($clave)){
             echo "<script>alert('Todos los campos son obligatorios');</script>";
         } else {       
-            $confirmarExistencia = $conexion->prepare("SELECT * FROM usuarios WHERE nombre = ?");
+            $confirmarExistencia = $conexion->prepare("SELECT * FROM usuarios WHERE correo = ?");
             $confirmarExistencia->bind_param("s", $usuario);
             $confirmarExistencia->execute();
             $resultado = $confirmarExistencia->get_result();
+            $usuarioEncontrado = $resultado->fetch_assoc();
             
             if($resultado->num_rows > 0){
                 $errorMsg = "Ya se encuentra este usuario registrado";
             } else {
-                $stmt = $conexion->prepare("INSERT INTO usuarios (nombre, clave) VALUES (?, ?)");
+                $stmt = $conexion->prepare("INSERT INTO usuarios (correo, clave) VALUES (?, ?)");
                 $stmt->bind_param("ss", $usuario, $clave);
-                
+               
             if($stmt->execute()) {
                 echo "<script>alert('Se han ingresado correctamente los datos');</script>";
+                $_SESSION['id_usuario'] = $usuarioEncontrado['id'];
+                header("Location: index.php");
+                
             } else {
                 echo "<script>alert('Error');</script>";
             }
@@ -49,19 +54,19 @@
         <div id="register_box"> <!-- DA UN ERROR AL PONERLE EL ESTILO, SOLO FUNCIONA CON login_box -->
             <form action="" method="post" id="registerform">
                 <div class=" mb-5" id="register_box">
-                    <h1 style="color: #FF6600; font-size: 48px;" >Nuevo usuario</h1>
+                    <h1 style="color: #FF6600; font-size: 36px;" >Nuevo usuario</h1>
                 </div>
                 <div class="login_form d-flex mb-5" >
                     <img src="recursos/usuario.png" class="me-3" alt="usuario" style="width: 28px; height: 28px;">
-                    <input type="text" name="usuario" class="input_login" id="usuario" placeholder="Ingrese el nuevo usuario"  style="width: 100%; font-size: 24px; color: white; background: none; border: none;">
+                    <input type="email" name="usuario" class="input_login" id="usuario" placeholder="Correo"  style="width: 100%; font-size: 24px; color: white; background: none; border: none;">
                 </div>
                 <div class="login_form d-flex mb-5">
                     <img src="recursos/candado.png" alt="usuario" class="me-3" style="width: 28px; height: 28px;">
-                    <input type="password" name="clave" id="contraseña" class="input_login" placeholder="Ingrese la contraseña"  style="width: 100%; font-size: 24px; color: white; background: none; border: none;">
+                    <input type="password" name="clave" id="contraseña" class="input_login" placeholder="Contraseña"  style="width: 100%; font-size: 24px; color: white; background: none; border: none;">
                 </div>
                 <div class="login_form d-flex mb-5">
                 <img src="recursos/candado.png" alt="usuario" class="me-3" style="width: 28px; height: 28px;">
-                <input type="password" name="confirmarClave" id="confirmarContraseña" class="input_login" placeholder="Confirme su contraseña"  style="width: 100%; font-size: 24px; color: white; background: none; border: none;">
+                <input type="password" name="confirmarClave" id="confirmarContraseña" class="input_login" placeholder="Repetir Contraseña"  style="width: 100%; font-size: 24px; color: white; background: none; border: none;">
             </div>
             <div class="mt-5 d-flex justify-content-center">
                 <div>

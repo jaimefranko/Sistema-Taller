@@ -1,6 +1,6 @@
-<?php 
-session_start();
-
+<?php
+include_once("conexion.php");
+check_session();
 ?>
 
 <!DOCTYPE html>
