@@ -1,0 +1,64 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: #262626;
+}
+#login_box {
+    background-color: #383434;
+    width: 530px;
+    height: 629px;
+    border-radius: 16px;
+}
+#register_box {
+    background-color: #383434 !important; 
+    padding: 100px !important;
+    width: 530px !important;
+    height: 629px !important;
+    border-radius: 16px !important;
+}
+.login_caja_principal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login_form {
+    border-bottom: #FF6600 2px solid;
+}
+.login_titulo::after {
+  content: "";
+  display: block;
+  width: 50%;
+  border-bottom: 3px solid #CC3300;
+}
+.input_login::placeholder{
+    color: white;
+}
+.input_login:focus{
+    outline: none;
+    border: none;   
+}
+.input_login:focus::placeholder {
+    color: transparent;
+}
+.botones_sistema{
+    background-color: #CC3300; border-style: none; width: 152px; height: 48px; border-radius: 16px; font-size: 24px; color: white;
+}
+.botones_sistema:hover{
+    background-color: #FF6600;
+}
+.verificacionAdmin_caja_principal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.verificacionAdmin_box{
+    padding: 50px;
+    width: 530px;
+    background-color: #383434;
+    border-radius: 16px;
+}
